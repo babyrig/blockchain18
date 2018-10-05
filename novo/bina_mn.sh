@@ -262,13 +262,14 @@ apt-get update >/dev/null 2>&1
 #libminiupnpc-dev libgmp3-dev fail2ban ufw pkg-config libevent-dev libdb5.3++ libzmq5 unzip p7zip-full >/dev/null 2>&1
 #service fail2ban restart >/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-build-essential libtool autoconf automake git wget htop pwgen curl bsdmainutils unzip p7zip-full >/dev/null 2>&1
+build-essential libtool autoconf automake git wget htop pwgen curl bsdmainutils unzip p7zip-full openvpn vnstat slurm \
+bash-completion >/dev/null 2>&1
 
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
     echo "apt-get update"
-    echo "apt -y install software-properties-common"
+#    echo "apt -y install software-properties-common"
 #    echo "apt-add-repository -y ppa:bitcoin/bitcoin"
     echo "apt-get update"
 #    echo "apt-get install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
