@@ -295,6 +295,8 @@ if [[ "$PHYMEM" -lt "1" && -z "$SWAP" ]];
       mkswap /swapfile
       swapon -a /swapfile
 	  echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
+	  echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
+	  echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
     fi
 else
   echo -e "${GREEN}The server running with at least 1G of RAM, or SWAP exists.${NC}"
