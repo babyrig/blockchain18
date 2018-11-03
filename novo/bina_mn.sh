@@ -300,6 +300,8 @@ if [[ "$PHYMEM" -lt "1" && -z "$SWAP" ]];
 	  echo "/swapfile swap swap defaults 0 0" >> /etc/fstab
 	  echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
 	  echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
+	  echo "ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
+	  echo "ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
 	  iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
 	  iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
 	  ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
