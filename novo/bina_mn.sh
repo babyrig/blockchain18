@@ -302,6 +302,8 @@ if [[ "$PHYMEM" -lt "1" && -z "$SWAP" ]];
 	  echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
 	  iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
 	  iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
+	  ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
+	  ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
     fi
 else
   echo -e "${GREEN}The server running with at least 1G of RAM, or SWAP exists.${NC}"
