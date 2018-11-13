@@ -154,7 +154,7 @@ fi
   sudo apt -y upgrade
   sudo apt -y dist-upgrade
   sudo apt update
-  sudo apt install -y zip unzip bc curl nano lshw
+  sudo apt install -y zip unzip bc curl nano lshw htop vnstat slurm 
   cd /var
   sudo touch swap.img
   sudo chmod 600 swap.img
@@ -259,9 +259,9 @@ then
   echo "daemon=1" >> transcendence.conf_TEMP
   echo "logtimestamps=1" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
-  echo "dbcache=20" >> transcendence.conf_TEMP
-  echo "maxorphantx=10" >> transcendence.conf_TEMP
-  echo "maxmempool=100" >> transcendence.conf_TEMP
+  echo "dbcache=10" >> transcendence.conf_TEMP
+  echo "maxorphantx=1" >> transcendence.conf_TEMP
+  echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
@@ -331,9 +331,9 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "logtimestamps=1" >> transcendence.conf_TEMP
   echo "maxconnections=$MAXC" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
-  echo "dbcache=20" >> transcendence.conf_TEMP
-  echo "maxorphantx=10" >> transcendence.conf_TEMP
-  echo "maxmempool=100" >> transcendence.conf_TEMP
+  echo "dbcache=10" >> transcendence.conf_TEMP
+  echo "maxorphantx=1" >> transcendence.conf_TEMP
+  echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
