@@ -16,6 +16,29 @@ if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
 fi
+if grep -qF "inet6" /etc/network/interfaces
+then
+   IP6SET="y"
+else
+   IP6SET="n"
+fi
+if [ $IP6SET = "n" ]
+then
+  face="$(lshw -C network | grep "logical name:" | sed -e 's/logical name:/logical name: /g' | awk '{print $3}')"
+  echo "iface $face inet6 static" >> /root/interfaces
+  echo "address $IP6" >> /root/interfaces
+  echo "netmask 64" >> /root/interfaces
+fi
+face="$(lshw -C network | grep "logical name:" | sed -e 's/logical name:/logical name: /g' | awk '{print $3}')"
+1=$(/sbin/route -A inet6 | grep -w "$face")
+gateway2=${gateway1:0:26}
+gateway3="$(echo -e "${gateway2}" | tr -d '[:space:]')"
+if [[ $gateway3 = *"128"* ]]; then
+  gateway=${gateway3::-5}
+fi
+if [[ $gateway3 = *"64"* ]]; then
+  gateway=${gateway3::-3}
+fi
 IP4COUNT=$(find /root/.transcendence_* -maxdepth 0 -type d | wc -l)
 function configure_systemd() {
   cat << EOF > /etc/systemd/system/transcendenced$ALIAS.service
@@ -236,9 +259,9 @@ then
   echo "daemon=1" >> transcendence.conf_TEMP
   echo "logtimestamps=1" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
-  echo "dbcache=10" >> transcendence.conf_TEMP
-  echo "maxorphantx=1" >> transcendence.conf_TEMP
-  echo "maxmempool=50" >> transcendence.conf_TEMP
+  echo "dbcache=20" >> transcendence.conf_TEMP
+  echo "maxorphantx=10" >> transcendence.conf_TEMP
+  echo "maxmempool=100" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
@@ -309,8 +332,8 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "maxconnections=$MAXC" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
   echo "dbcache=20" >> transcendence.conf_TEMP
-  echo "maxorphantx=1" >> transcendence.conf_TEMP
-  echo "maxmempool=50" >> transcendence.conf_TEMP
+  echo "maxorphantx=10" >> transcendence.conf_TEMP
+  echo "maxmempool=100" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
