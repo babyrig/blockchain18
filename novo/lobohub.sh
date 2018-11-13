@@ -16,13 +16,6 @@ if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
 fi
-if grep -qF "inet6" /etc/network/interfaces
-then
-   IP6SET="y"
-else
-   IP6SET="n"
-fi
-if [ $IP6SET = "n" ]
 IP4COUNT=$(find /root/.transcendence_* -maxdepth 0 -type d | wc -l)
 function configure_systemd() {
   cat << EOF > /etc/systemd/system/transcendenced$ALIAS.service
