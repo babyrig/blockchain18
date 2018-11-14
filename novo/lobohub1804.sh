@@ -8,7 +8,7 @@ IP6=$(curl -s4 v6.ipv6-test.com/api/myip.php)
   then
   mkdir ~/bin
   fi
-if [[ $(lsb_release -d) != *16.04* ]]; then
+if [[ $(lsb_release -d) != *16.08* ]]; then
   echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
   exit 1
 fi
@@ -195,11 +195,11 @@ cp src/transcendence-cli /usr/local/bin/
 fi
 if [ $COMPILE = "n" ]
 then
-  wget https://github.com/phoenixkonsole/transcendence/releases/download/v1.1.0.0/Linux.zip  
-  unzip Linux.zip 
-  chmod +x Linux/bin/* 
-  sudo mv  Linux/bin/* /usr/local/bin
-  rm -rf Linux.zip Windows Linux Mac
+  echo "wget https://github.com/phoenixkonsole/transcendence/releases/download/v1.1.0.0/Linux.zip"
+  echo "unzip Linux.zip" 
+  echo "chmod +x Linux/bin/*"
+  echo "sudo mv  Linux/bin/* /usr/local/bin"
+  echo "rm -rf Linux.zip Windows Linux Mac"
   fi
 fi
 
@@ -296,7 +296,7 @@ let COUNTER=COUNTER+IP4COUNT
 while [  $COUNTER -lt $MNCOUNT ]; do
  PORT=22123
  PORTD=$((22123+$COUNTER))
- RPCPORTT=$(($PORT*10))
+ RPCPORTT=$(($PORT*1))
  RPCPORT=$(($RPCPORTT+$COUNTER))
  COUNTER=$((COUNTER+1))
   echo ""
