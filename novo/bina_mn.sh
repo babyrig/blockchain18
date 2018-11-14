@@ -162,10 +162,10 @@ function update_config() {
   sed -i 's/daemon=1/daemon=0/' $CONFIGFOLDER/$CONFIG_FILE
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logtimestamps=1
-maxconnections=32
+maxconnections=16
 blocksonly=1
 maxorphantx=1
-maxuploadtarget=496
+maxuploadtarget=400
 masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeaddr=$NODEIP:$COIN_PORT
