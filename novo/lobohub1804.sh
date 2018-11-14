@@ -154,7 +154,7 @@ fi
   sudo apt -y upgrade
   sudo apt -y dist-upgrade
   sudo apt update
-  sudo apt install -y zip unzip bc curl nano lshw htop vnstat slurm 
+  sudo apt install -y zip unzip bc curl nano lshw htop vnstat slurm libboost-all-dev libdb5.3++-dev libdb5.3-dev libevent-dev atop
   cd /var
   sudo touch swap.img
   sudo chmod 600 swap.img
@@ -163,10 +163,12 @@ fi
   sudo swapon /var/swap.img 
   sudo free 
   sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
-  printf '%s\n' '#!/bin/bash' 'iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT'
-	  'iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP'
-	  'ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT'
-	  'ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP' 'exit 0' | sudo tee -a /etc/rc.local
+  echo "#!/bin/bash" >> /etc/rc.local
+  echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
+  echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
+  echo "ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
+  echo "ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
+  echo "exit 0" >> /etc/rc.local
   chmod +x /etc/rc.local
   cd
   echo ""
@@ -269,6 +271,9 @@ then
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "maxuploadtarget=400" >> transcendence.conf_TEMP
+  echo "bind=" >> transcendence.conf_TEMP
+  echo "externalip=" >> transcendence.conf_TEMP
+  echo "onlynet=ipv6" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
@@ -342,6 +347,8 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "maxuploadtarget=400" >> transcendence.conf_TEMP
+  echo "bind=" >> transcendence.conf_TEMP
+  echo "externalip=" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
