@@ -263,6 +263,7 @@ then
   echo "maxorphantx=1" >> transcendence.conf_TEMP
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
+  echo "maxuploadtarget=400" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
@@ -335,6 +336,7 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "maxorphantx=1" >> transcendence.conf_TEMP
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
+  echo "maxuploadtarget=400" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
@@ -352,6 +354,7 @@ while [  $COUNTER -lt $MNCOUNT ]; do
 	echo "alias ${ALIAS}_resync=\"/root/bin/transcendenced_$ALIAS.sh -resync\"" >> .bashrc
 	echo "alias ${ALIAS}_reindex=\"/root/bin/transcendenced_$ALIAS.sh -reindex\"" >> .bashrc
 	echo "alias ${ALIAS}_restart=\"systemctl restart transcendenced$ALIAS\""  >> .bashrc
+	echo "alias ${ALIAS}_getpeerinfo=\"transcendence-cli -datadir=/root/.transcendence_$ALIAS getpeerinfo\"" >> .bashrc
 	## Config Systemctl
 	configure_systemd
 done
