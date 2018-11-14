@@ -163,6 +163,11 @@ fi
   sudo swapon /var/swap.img 
   sudo free 
   sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
+  printf '%s\n' '#!/bin/bash' 'iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT'
+	  'iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP'
+	  'ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT'
+	  'ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP' 'exit 0' | sudo tee -a /etc/rc.local
+  chmod +x /etc/rc.local
   cd
   echo ""
   echo "Do you want to compile your wallet? (Minimum 2gb of RAM, may take some time) [y/n]"
@@ -226,7 +231,7 @@ if [ $INTR = "1" ]
 then
  PORT=22123
  PORTD=22123
- RPCPORT=61230
+ RPCPORT=21230
   echo ""
   echo "Enter alias for new node"
   read ALIAS
@@ -296,7 +301,7 @@ let COUNTER=COUNTER+IP4COUNT
 while [  $COUNTER -lt $MNCOUNT ]; do
  PORT=22123
  PORTD=$((22123+$COUNTER))
- RPCPORTT=$(($PORT*1))
+ RPCPORTT=$(($PORT*10))
  RPCPORT=$(($RPCPORTT+$COUNTER))
  COUNTER=$((COUNTER+1))
   echo ""
