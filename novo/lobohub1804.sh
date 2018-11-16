@@ -277,6 +277,9 @@ then
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
+  echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
+
   echo "port=$PORTD" >> transcendence.conf_TEMP
   echo "masternodeaddr=$IP4:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
@@ -288,6 +291,7 @@ then
 	echo "alias ${ALIAS}_start=\"systemctl start transcendenced$ALIAS\""  >> .bashrc
 	echo "alias ${ALIAS}_config=\"nano /root/.transcendence_${ALIAS}/transcendence.conf\""  >> .bashrc
 	echo "alias ${ALIAS}_getinfo=\"transcendence-cli -datadir=/root/.transcendence_$ALIAS getinfo\"" >> .bashrc
+	echo "alias ${ALIAS}_getpeerinfo=\"transcendence-cli -datadir=/root/.transcendence_$ALIAS getpeerinfo\"" >> .bashrc
 	echo "alias ${ALIAS}_resync=\"/root/bin/transcendenced_$ALIAS.sh -resync\"" >> .bashrc
 	echo "alias ${ALIAS}_reindex=\"/root/bin/transcendenced_$ALIAS.sh -reindex\"" >> .bashrc
 	echo "alias ${ALIAS}_restart=\"systemctl restart transcendenced$ALIAS\""  >> .bashrc
@@ -346,12 +350,14 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "maxorphantx=1" >> transcendence.conf_TEMP
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
-  echo "maxuploadtarget=400" >> transcendence.conf_TEMP
+  echo "maxuploadtarget=200" >> transcendence.conf_TEMP
   echo "bind=" >> transcendence.conf_TEMP
   echo "externalip=" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
+  echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
   echo "port=$PORTD" >> transcendence.conf_TEMP
   echo "masternodeaddr=[${gateway}$COUNTER]:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
