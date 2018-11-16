@@ -154,7 +154,7 @@ fi
   sudo apt -y upgrade
   sudo apt -y dist-upgrade
   sudo apt update
-  sudo apt install -y zip unzip bc curl nano lshw htop vnstat slurm 
+  sudo apt install -y zip unzip bc curl nano lshw htop vnstat slurm libcurl4-openssl-dev cpulimit
   cd /var
   sudo touch swap.img
   sudo chmod 600 swap.img
@@ -163,6 +163,12 @@ fi
   sudo swapon /var/swap.img 
   sudo free 
   sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
+  echo "iface eth0 inet6 dhcp" >> /etc/network/interfaces.d/60-default-with-ipv6.cfg
+  sleep 2 
+  ifdown eth0
+  ifup eth0
+  sleep 2
+  MYIP6=`ip addr show dev eth0 | grep 2600 |  sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d'`
   echo "#!/bin/bash" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
@@ -271,14 +277,15 @@ then
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "maxuploadtarget=400" >> transcendence.conf_TEMP
-  echo "bind=" >> transcendence.conf_TEMP
-  echo "externalip=" >> transcendence.conf_TEMP
+  echo "bind=[$MYIP6]" >> transcendence.conf_TEMP
+  echo "externalip=[$MYIP6]" >> transcendence.conf_TEMP
   echo "onlynet=ipv6" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
+  echo "addnode=94.177.203.224:22123" >> transcendence.conf_TEMP
 
   echo "port=$PORTD" >> transcendence.conf_TEMP
   echo "masternodeaddr=$IP4:$PORT" >> transcendence.conf_TEMP
@@ -351,15 +358,16 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "maxuploadtarget=200" >> transcendence.conf_TEMP
-  echo "bind=" >> transcendence.conf_TEMP
-  echo "externalip=" >> transcendence.conf_TEMP
+  echo "bind=[$MYIP6]" >> transcendence.conf_TEMP
+  echo "externalip=[$MYIP6]" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
-  echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
+  #echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
+  echo "addnode=94.177.203.224:22123" >> transcendence.conf_TEMP
   echo "port=$PORTD" >> transcendence.conf_TEMP
-  echo "masternodeaddr=[${gateway}$COUNTER]:$PORT" >> transcendence.conf_TEMP
+  echo "masternodeaddr=[$MYIP6]:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
   mv transcendence.conf_TEMP $CONF_DIR/transcendence.conf
   echo ""
