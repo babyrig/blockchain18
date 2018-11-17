@@ -163,7 +163,6 @@ function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logtimestamps=1
 maxconnections=16
-blocksonly=1
 maxorphantx=1
 maxuploadtarget=400
 masternode=1
