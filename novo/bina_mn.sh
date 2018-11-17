@@ -306,6 +306,7 @@ if [[ "$PHYMEM" -lt "1" && -z "$SWAP" ]];
 	  iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
 	  ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
 	  ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
+	  echo "iface eth0 inet6 dhcp" > /etc/network/interfaces.d/60-default-with-ipv6.cfg 
     fi
 else
   echo -e "${GREEN}The server running with at least 1G of RAM, or SWAP exists.${NC}"
