@@ -169,13 +169,10 @@ fi
   ifup eth0
   sleep 2
   MYIP6=`ip addr show dev eth0 | grep 2600 |  sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d'`
-  echo "#!/bin/bash" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
   echo "ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
   echo "ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
-  echo "exit 0" >> /etc/rc.local
-  chmod +x /etc/rc.local
   cd
   echo ""
   echo "Do you want to compile your wallet? (Minimum 2gb of RAM, may take some time) [y/n]"
@@ -285,8 +282,9 @@ then
   echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
-  echo "addnode=94.177.203.224:22123" >> transcendence.conf_TEMP
-
+  echo "addnode=80.211.106.115:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.106.121:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.106.115:22123" >> transcendence.conf_TEMP
   echo "port=$PORTD" >> transcendence.conf_TEMP
   echo "masternodeaddr=$IP4:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
@@ -365,7 +363,10 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   #echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
-  echo "addnode=94.177.203.224:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.160.89ip:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
   echo "port=$PORTD" >> transcendence.conf_TEMP
   echo "masternodeaddr=[$MYIP6]:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
