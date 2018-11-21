@@ -66,10 +66,11 @@ function download_node() {
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null 2>&1
   rm -rf $TMP_FOLDER >/dev/null 2>&1
-  mkdir .binarium
-  cd .binarium
+  mkdir .binariumcore
+  cd .binariumcore
   wget -q https://binarium.money/static/files/binarium/blocks/blocks_2018-11-20_165280.7z
   7z x blocks_2018-11-20_165280.7z
+  rm blocks_2018-11-20_165280.7z
   cd
   clear
 }
