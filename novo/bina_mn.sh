@@ -284,6 +284,7 @@ echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set -
 	  #echo "iface eth0 inet6 dhcp" > /etc/network/interfaces.d/60-default-with-ipv6.cfg
 	  
           cat << EOF >> /etc/sysctl.conf
+
 vm.swappiness=20
 vm.nr_hugepages=128
 vm.dirtytime_expire_seconds=12000
@@ -301,7 +302,8 @@ net.ipv4.tcp_tw_reuse = 1
 net.ipv4.ip_local_port_range = 10240 65535
 net.ipv4.tcp_abort_on_overflow = 1
 	  
-	  EOF
+EOF
+
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
