@@ -170,7 +170,7 @@ function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logtimestamps=1
 maxconnections=16
-#maxorphantx=1
+onlynet=ipv4
 maxuploadtarget=400
 masternode=1
 externalip=$NODEIP:$COIN_PORT
