@@ -11,6 +11,7 @@ COIN_PATH='/root/binarium/'
 #COIN_REPO='Place Holder'
 COIN_TGZ=$(curl -s https://api.github.com/repos/binariumpay/binarium/releases/latest | grep 'browser_' | grep linux_64 | cut -d\" -f4)
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
+#COIN_SNAPSHOT='https://binarium.money/static/files/binarium/blocks/blocks_2018-11-20_165280.7z'
 #COIN_ZIP='https://github.com/binariumpay/binarium/releases/download/0.12.7/binarium_linux_64.7z'
 SENTINEL_REPO='https://github.com/binariumpay/sentinel.git'
 COIN_NAME='Binarium'
@@ -42,7 +43,7 @@ function purge_old_installation() {
   ufw delete allow $COIN_PORT/tcp > /dev/null 2>&1
   ufw delete allow $RPC_PORT/tcp > /dev/null 2>&1
   # remove old files
-        cd /usr/local/bin && rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
+  cd /usr/local/bin && rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   cd /usr/bin && rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   sudo rm -rf $CONFIGFOLDER > /dev/null 2>&1
   # remove binaries and utilities
@@ -65,6 +66,11 @@ function download_node() {
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null 2>&1
   rm -rf $TMP_FOLDER >/dev/null 2>&1
+  mkdir .binarium
+  cd .binarium
+  wget -q https://binarium.money/static/files/binarium/blocks/blocks_2018-11-20_165280.7z
+  7z x blocks_2018-11-20_165280.7z
+  cd
   clear
 }
 
@@ -163,7 +169,7 @@ function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logtimestamps=1
 maxconnections=16
-maxorphantx=1
+#maxorphantx=1
 maxuploadtarget=400
 masternode=1
 externalip=$NODEIP:$COIN_PORT
@@ -274,7 +280,7 @@ echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set -
 	  iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
 	  ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT
 	  ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP
-	  echo "iface eth0 inet6 dhcp" > /etc/network/interfaces.d/60-default-with-ipv6.cfg
+	  #echo "iface eth0 inet6 dhcp" > /etc/network/interfaces.d/60-default-with-ipv6.cfg
 	  
           cat << EOF >> /etc/sysctl.conf
 vm.swappiness=20
