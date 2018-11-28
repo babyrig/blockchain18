@@ -161,7 +161,7 @@ fi
   sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
   sudo mkswap /var/swap.img 
   sudo swapon /var/swap.img 
-  sudo free 
+  sudo free -m
   sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
   echo "iface eth0 inet6 dhcp" >> /etc/network/interfaces.d/60-default-with-ipv6.cfg
   sleep 2 
@@ -169,10 +169,31 @@ fi
   ifup eth0
   sleep 2
   MYIP6=`ip addr show dev eth0 | grep 2600 |  sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d'`
+  echo "echo tsc > /sys/devices/system/clocksource/clocksource0/current_clocksource" >> /etc/rc.local
+  echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
   echo "iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
   echo "ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT" >> /etc/rc.local
   echo "ip6tables -A INPUT -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 3 --rttl --name SSH -j DROP" >> /etc/rc.local
+  cat << EOF >> /etc/sysctl.conf
+vm.swappiness=20
+vm.nr_hugepages=128
+vm.dirtytime_expire_seconds=12000
+vm.dirty_ratio=20
+vm.dirty_background_ratio=5
+net.core.somaxconn = 1000
+net.core.netdev_max_backlog = 5000
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_wmem = 4096 12582912 16777216
+net.ipv4.tcp_rmem = 4096 12582912 16777216
+net.ipv4.tcp_max_syn_backlog = 8096
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.ip_local_port_range = 10240 65535
+net.ipv4.tcp_abort_on_overflow = 1
+EOF
+
   cd
   echo ""
   echo "Do you want to compile your wallet? (Minimum 2gb of RAM, may take some time) [y/n]"
@@ -279,7 +300,6 @@ then
   echo "onlynet=ipv6" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
-  echo "addnode=127.0.0.1" >> transcendence.conf_TEMP
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.106.115:22123" >> transcendence.conf_TEMP
