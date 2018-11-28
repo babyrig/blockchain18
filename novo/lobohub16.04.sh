@@ -131,7 +131,7 @@ read EE
 echo ""
 if [ $EE = "1" ] 
 then
-MAXC="16"
+MAXC="32"
 fi
 if [ $EE = "2" ] 
 then
@@ -336,7 +336,7 @@ let COUNTER=COUNTER+IP4COUNT
 while [  $COUNTER -lt $MNCOUNT ]; do
  PORT=22123
  PORTD=$((22123+$COUNTER))
- RPCPORTT=$(($PORT*10))
+ RPCPORTT=$(($PORT+1))
  RPCPORT=$(($RPCPORTT+$COUNTER))
  COUNTER=$((COUNTER+1))
   echo ""
@@ -370,13 +370,14 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "server=1" >> transcendence.conf_TEMP
   echo "daemon=1" >> transcendence.conf_TEMP
   echo "logtimestamps=1" >> transcendence.conf_TEMP
-  echo "maxconnections=$MAXC" >> transcendence.conf_TEMP
+  echo "printtoconsole=1" >> transcendence.conf_TEMP
+  echo "connections=$MAXC" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
   echo "dbcache=10" >> transcendence.conf_TEMP
   echo "maxorphantx=1" >> transcendence.conf_TEMP
   echo "maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
-  echo "maxuploadtarget=200" >> transcendence.conf_TEMP
+  echo "maxuploadtarget=400" >> transcendence.conf_TEMP
   echo "bind=[$MYIP6]" >> transcendence.conf_TEMP
   echo "externalip=[$MYIP6]" >> transcendence.conf_TEMP
   echo "" >> transcendence.conf_TEMP
@@ -385,7 +386,7 @@ while [  $COUNTER -lt $MNCOUNT ]; do
   echo "addnode=80.211.14.231:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.84.130:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
-  echo "addnode=80.211.160.89ip:22123" >> transcendence.conf_TEMP
+  echo "addnode=80.211.160.89:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
   echo "addnode=80.211.100.148:22123" >> transcendence.conf_TEMP
   echo "port=$PORTD" >> transcendence.conf_TEMP
