@@ -289,10 +289,11 @@ then
   echo "server=1" >> transcendence.conf_TEMP
   echo "daemon=1" >> transcendence.conf_TEMP
   echo "logtimestamps=1" >> transcendence.conf_TEMP
+  echo "printtoconsole=1" >> transcendence.conf_TEMP
   echo "masternode=1" >> transcendence.conf_TEMP
   echo "dbcache=10" >> transcendence.conf_TEMP
-  echo "maxorphantx=1" >> transcendence.conf_TEMP
-  echo "maxmempool=50" >> transcendence.conf_TEMP
+  echo "#maxorphantx=1" >> transcendence.conf_TEMP
+  echo "#maxmempool=50" >> transcendence.conf_TEMP
   echo "banscore=10" >> transcendence.conf_TEMP
   echo "maxuploadtarget=400" >> transcendence.conf_TEMP
   echo "bind=[$MYIP6]" >> transcendence.conf_TEMP
