@@ -169,7 +169,7 @@ function update_config() {
   sed -i 's/daemon=1/daemon=0/' $CONFIGFOLDER/$CONFIG_FILE
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logtimestamps=1
-maxconnections=16
+maxconnections=32
 onlynet=ipv4
 maxuploadtarget=400
 masternode=1
@@ -288,7 +288,7 @@ bash-completion >/dev/null 2>&1
           cat << EOF >> /etc/sysctl.conf
 
 vm.swappiness=20
-vm.nr_hugepages=128
+#vm.nr_hugepages=128
 vm.dirtytime_expire_seconds=12000
 vm.dirty_ratio=20
 vm.dirty_background_ratio=5
