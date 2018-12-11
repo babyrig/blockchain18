@@ -287,7 +287,8 @@ bash-completion >/dev/null 2>&1
 	  
           cat << EOF >> /etc/sysctl.conf
 
-vm.swappiness=20
+vm.swappiness=10
+vm.vfs_cache_pressure=200
 #vm.nr_hugepages=128
 vm.dirtytime_expire_seconds=12000
 vm.dirty_ratio=20
