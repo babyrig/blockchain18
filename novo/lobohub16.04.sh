@@ -159,12 +159,12 @@ fi
   sudo touch swap.img
   sudo chmod 600 swap.img
   sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
-  sudo mkswap /var/swap.img 
-  sudo swapon /var/swap.img 
+  sudo mkswap /var/swap.img
+  sudo swapon /var/swap.img
   sudo free -m
   sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
   echo "iface eth0 inet6 dhcp" >> /etc/network/interfaces.d/60-default-with-ipv6.cfg
-  sleep 2 
+  sleep 2
   ifdown eth0
   ifup eth0
   sleep 2
