@@ -1,5 +1,5 @@
 #!/bin/bash
-_input="/root/binarium/oldbin.ip"
+_input="/root/binarium/bina_old.ip"
 IPT=/sbin/iptables
 #$IPT -F -t droplist
 $IPT -N droplist
