@@ -1,0 +1,8 @@
+apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl1.0-dev libboost-all-dev
+
+libgmp3-dev
+export CC=clang-6.0
+export CXX=clang++-6.0
+
+./configure --with-incompatible-bdb --disable-tests --disable-bench --without-miniupnpc --disable-upnp-default
+
