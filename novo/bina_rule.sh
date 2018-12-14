@@ -14,8 +14,8 @@ $IPT -D FORWARD -j droplist
 while IFS= read -r ip
 do
 #       $IPT -A INPUT -i eth0 -s $ip -j droplist
-        $IPT -A droplist -i eth0 -p tcp --dport 8884 -s $ip -j DROP
-
+#        $IPT -A droplist -i eth0 -p tcp --dport 8884 -s $ip -j DROP
+        $IPT -A droplist -i eth0 -s $ip -j DROP
 done < "$_input"
 # Drop it
 $IPT -I INPUT -j droplist
